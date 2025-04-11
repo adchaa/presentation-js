@@ -1,12 +1,11 @@
 ---
-theme: default
+theme: geist
 background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
 highlighter: shiki
 mdc: true
 info: |
   ## Événements JavaScript et Manipulation du DOM
-  Un guide complet pour créer des applications web interactives
 ---
 
 # Événements JavaScript et Manipulation du DOM
@@ -41,102 +40,43 @@ layout: two-cols
 
 ---
 
-# Qu'est-ce que le DOM ?
+# Mouse Hover
 
-Le Document Object Model (DOM) est une interface de programmation pour les documents HTML.
-
-- Représente la page comme des nœuds et des objets
-- Peut être manipulé avec JavaScript
-- Permet un contenu dynamique et interactif
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Mon Document</title>
-</head>
-<body>
-  <h1 id="titre-principal">Bonjour le Monde</h1>
-  <div class="contenu">
-    <p>Ceci est un paragraphe.</p>
-  </div>
-</body>
-</html>
-```
-
----
-class: text-center
----
-
-# Visualisons le DOM
-
-```mermaid
-graph TD
-    A[Document] --> B[html]
-    B --> C[head]
-    B --> D[body]
-    C --> E[title]
-    D --> F[h1]
-    D --> G[div]
-    G --> H[p]
-    E --> I["Mon Document"]
-    F --> J["Bonjour le Monde"]
-    H --> K["Ceci est un paragraphe."]
-    
-    style F fill:#f9c74f,stroke:#90be6d
-    style G fill:#f8961e,stroke:#90be6d
-    style H fill:#f3722c,stroke:#90be6d
-```
-
----
-
-# Événements JavaScript
-
-<div class="mb-4">
-Les événements sont des actions ou des occurrences qui se produisent dans le navigateur et qui peuvent être détectés par JavaScript.
+<div id="mouse"  class="flex justify-center items-center border-2 rounded w-40 h-40">
+  déplacer le curseur 
 </div>
 
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Types d'Événements Courants</h3>
-    <ul>
-      <li>Événements de souris : click, dblclick, mouseover</li>
-      <li>Événements clavier : keydown, keyup, keypress</li>
-      <li>Événements de formulaire : submit, change, input</li>
-      <li>Événements Document/Window : load, resize, scroll</li>
-    </ul>
-  </div>
-  <div>
-    <div class="bg-gray-100 p-4 rounded-lg">
-      ```js
-      element.addEventListener('click', function() {
-        console.log('L\'élément a été cliqué !');
-      });
-      ```
-    </div>
-  </div>
-</div>
+```js
+  const mouse = document.getElementById("mouse")
+  mouse.addEventListener("mousemove",(e)=>{
+    mouse.textContent = `(${e.x},${e.y})`
+  })
+```
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const mouse = document.getElementById("mouse")
+  mouse.addEventListener("mousemove",(e)=>{
+    mouse.textContent = `(${e.x},${e.y})`
+  })
+})
+</script>
 
 ---
 
 # Démo : Écouteurs d'Événements
 
-<div class="demo-container">
-  <button id="demo-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Cliquez-moi
-  </button>
-  <div id="click-count" class="mt-4 text-xl font-bold">Clics : 0</div>
-</div>
+<button id="demo-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  Cliquez-moi
+</button>
 
 ```js
-// Essayez de modifier ce code !
-let compteur = 0;
 const bouton = document.getElementById('demo-button');
-const affichage = document.getElementById('click-count');
 
 bouton.addEventListener('click', function() {
-  compteur++;
-  affichage.textContent = `Clics : ${compteur}`;
+  bouton.style.backgroundColor = getRandomColor()
 });
 ```
 
@@ -144,16 +84,19 @@ bouton.addEventListener('click', function() {
 import { onMounted } from 'vue'
 
 onMounted(() => {
-  const bouton = document.getElementById('demo-button')
-  const affichage = document.getElementById('click-count')
-  let compteur = 0
-  
-  if (bouton && affichage) {
-    bouton.addEventListener('click', () => {
-      compteur++
-      affichage.textContent = `Clics : ${compteur}`
-    })
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
+  const bouton = document.getElementById('demo-button');
+
+  bouton.addEventListener('click', function() {
+    bouton.style.backgroundColor = getRandomColor()
+  });
 })
 </script>
 
