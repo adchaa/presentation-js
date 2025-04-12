@@ -40,6 +40,334 @@ layout: two-cols
 
 ---
 
+# HTML DOM
+
+Lorsqu'une page web est chargée, le navigateur crée DOM (Document Object Model) de la page
+
+<div class="flex justify-center items-center">
+```mermaid
+graph TD
+    A[Document] --> B[html]
+    B --> C[head]
+    B --> D[body]
+    C --> E[title]
+    D --> F[h1]
+    D --> G[div]
+```
+</div>
+
+---
+
+## JavaScript obtient toute la puissance nécessaire pour créer du HTML dynamique:
+
+<ul class="list-disc pl-6 space-y-2 text-lg">
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut modifier tous les éléments HTML de la page</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut modifier tous les attributs HTML de la page</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut modifier tous les styles CSS de la page</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut supprimer des éléments et des attributs HTML existants</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut ajouter de nouveaux éléments et attributs HTML</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut réagir à tous les événements HTML existants dans la page</li>
+  <li class="text-gray-200 hover:text-blue-600 transition-colors">JavaScript peut créer de nouveaux événements HTML dans la page</li>
+</ul>
+
+---
+
+# Trouver des Éléments HTML
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Méthodes de Sélection</h3>
+    
+```js
+// Par ID - retourne un élément unique
+const element = document.getElementById('monId');
+
+// Par nom de classe - retourne une HTMLCollection
+const elements = document.getElementsByClassName('maClasse');
+
+// Par nom de balise - retourne une HTMLCollection
+const paragraphes = document.getElementsByTagName('p');
+
+// Par nom - retourne une NodeList (formulaires)
+const inputs = document.getElementsByName('email');
+```
+  </div>
+  
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Sélecteurs CSS (Modernes)</h3>
+    
+```js
+// Sélectionne le premier élément correspondant
+const premier = document.querySelector('.classe');
+
+// Sélectionne tous les éléments correspondants
+// Retourne une NodeList
+const tous = document.querySelectorAll('p.important');
+
+// Sélecteurs complexes
+const elements = document.querySelectorAll(
+  'div.container > p:first-child'
+);
+
+// Vérifier l'existence d'un élément
+if (document.querySelector('.elementSpecial')) {
+  // L'élément existe
+}
+```
+  </div>
+</div>
+
+---
+
+# Collections HTML et NodeList
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">HTMLCollection</h3>
+    
+```js
+// Retourne une HTMLCollection
+const divs = document.getElementsByTagName('div');
+
+// Accès par index
+const premierDiv = divs[0];
+
+// Accès par ID
+const divSpecial = divs.namedItem('divId');
+
+// ⚠️ Collection DYNAMIQUE (mise à jour automatique)
+// quand le DOM change
+console.log(divs.length); // 5
+document.body.appendChild(document.createElement('div'));
+console.log(divs.length); // 6 (mise à jour automatique)
+
+// Conversion en tableau pour utiliser les méthodes Array
+const tabDivs = Array.from(divs);
+tabDivs.forEach(div => div.style.color = 'blue');
+```
+  </div>
+  
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">NodeList</h3>
+    
+```js
+// Retourne une NodeList
+const paras = document.querySelectorAll('p');
+
+// Accès par index
+const premierPara = paras[0];
+
+// ⚠️ Collection STATIQUE (pas de mise à jour)
+console.log(paras.length); // 3
+document.body.appendChild(document.createElement('p'));
+console.log(paras.length); // Toujours 3 (ne change pas)
+
+// Possède forEach natif (mais pas toutes les méthodes Array)
+paras.forEach(para => para.classList.add('texte'));
+
+// Conversion complète en tableau si nécessaire
+const tabParas = Array.from(paras);
+const filtre = tabParas.filter(p => p.textContent.includes('mot'));
+```
+  </div>
+</div>
+
+---
+
+# Modifier des Éléments HTML
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Contenu et Attributs</h3>
+    
+```js
+// Modifier le contenu HTML
+element.innerHTML = '<span>Nouveau contenu</span>';
+
+// Modifier le contenu texte (plus sécurisé)
+element.textContent = 'Texte simple';
+
+// Modifier des attributs (méthode 1)
+element.setAttribute('class', 'active');
+element.setAttribute('data-id', '123');
+
+// Modifier des attributs (méthode 2)
+element.id = 'nouveauId';
+element.className = 'nouvelle-classe';
+element.href = 'https://exemple.com';
+```
+  </div>
+  
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Styles et Classes</h3>
+    
+```js
+// Modifier les styles directement
+element.style.color = 'red';
+element.style.backgroundColor = '#f0f0f0';
+element.style.fontSize = '18px';
+
+// Ajouter/supprimer des classes
+element.classList.add('actif');
+element.classList.remove('inactif');
+element.classList.toggle('selectionne');
+element.classList.replace('ancien', 'nouveau');
+
+// Vérifier si une classe existe
+if (element.classList.contains('important')) {
+  // Faire quelque chose
+}
+```
+  </div>
+</div>
+
+---
+
+# Ajouter et Supprimer des Éléments
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Créer et Ajouter</h3>
+    
+```js
+// Créer un nouvel élément
+const div = document.createElement('div');
+const para = document.createElement('p');
+
+// Ajouter à la fin d'un élément parent
+document.body.appendChild(div);
+parentElement.appendChild(para);
+
+// Insérer avant un élément spécifique
+parentElement.insertBefore(nouvelElement, referenceElement);
+
+// Méthodes modernes (meilleur support)
+parent.append(element1, element2); // Ajoute à la fin
+parent.prepend(element); // Ajoute au début
+reference.before(element); // Insère avant
+reference.after(element); // Insère après
+```
+  </div>
+  
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Supprimer et Remplacer</h3>
+    
+```js
+// Supprimer un élément (méthode moderne)
+element.remove();
+
+// Supprimer un élément enfant
+parent.removeChild(element);
+
+// Remplacer un élément
+parent.replaceChild(nouvelElement, ancienElement);
+
+// Méthode moderne pour remplacer
+ancienElement.replaceWith(nouvelElement);
+
+// Écrire directement dans le flux HTML (DÉCONSEILLÉ)
+// Efface tout le contenu existant !
+document.write('<p>Nouveau contenu</p>');
+```
+</div>
+</div>
+
+---
+
+# Méthodes de Gestion des Événements
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Méthode 1 : Attributs HTML</h3>
+```html
+<button onclick="gererClic()">Cliquez-moi</button>
+```
+    <div class="mt-2 text-red-500">⚠️ Non recommandé - mélange HTML et JS</div>
+  </div>
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Méthode 2 : Propriétés DOM</h3>
+```js
+const bouton = document.querySelector('button');
+bouton.onclick = function() {
+  alert('Bouton cliqué !');
+};
+```
+    <div class="mt-2 text-orange-500">⚠️ Limité - un seul gestionnaire par événement</div>
+  </div>
+</div>
+
+<div class="mt-6">
+  <h3 class="text-xl text-yellow-500 mb-2">Méthode 3 : addEventListener (Recommandée)</h3>
+```js
+const bouton = document.querySelector('button');
+bouton.addEventListener('click', function() {
+  alert('Premier gestionnaire');
+});
+bouton.addEventListener('click', function() {
+  alert('Deuxième gestionnaire');
+});
+```
+  <div class="mt-2 text-green-500">✓ Gestionnaires multiples, plus de contrôle, séparation plus propre</div>
+</div>
+
+---
+
+# Techniques Avancées d'Événements
+
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
+```js
+// Au lieu d'ajouter un écouteur à chaque bouton
+document.getElementById('container').addEventListener('click', function(e) {
+  // Vérifier si l'élément cliqué est un bouton
+  if (e.target.matches('button.action')) {
+    console.log('Bouton cliqué:', e.target.textContent);
+    // Traiter l'événement
+  }
+});
+```
+    <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
+    
+    <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
+```js
+function handleClick(e) {
+  console.log('Clic traité');
+  // Supprimer après la première utilisation
+  e.currentTarget.removeEventListener('click', handleClick);
+}
+
+element.addEventListener('click', handleClick);
+```
+  </div>
+  
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
+```js
+// Options de base
+element.addEventListener('click', handler, {
+  once: true,      // Se déclenche une seule fois puis se supprime
+  capture: true,   // Capture pendant la phase descendante
+  passive: true    // Indique que preventDefault() ne sera pas appelé
+});
+
+// Arrêter la propagation
+element.addEventListener('click', function(e) {
+  e.stopPropagation(); // Empêche la remontée aux parents
+});
+
+// Empêcher le comportement par défaut
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Empêche l'envoi du formulaire
+  // Validation ou soumission AJAX
+});
+```
+    <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
+  </div>
+</div>
+
+---
+
 # Mouse Hover
 
 <div id="mouse"  class="flex justify-center items-center border-2 rounded w-40 h-40">
@@ -131,45 +459,6 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
   </div>
 </div>
 
----
-
-# Méthodes de Gestion des Événements
-
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Méthode 1 : Attributs HTML</h3>
-```html
-<button onclick="gererClic()">Cliquez-moi</button>
-```
-    <div class="mt-2 text-red-500">⚠️ Non recommandé - mélange HTML et JS</div>
-  </div>
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Méthode 2 : Propriétés DOM</h3>
-```js
-const bouton = document.querySelector('button');
-bouton.onclick = function() {
-  alert('Bouton cliqué !');
-};
-```
-    <div class="mt-2 text-orange-500">⚠️ Limité - un seul gestionnaire par événement</div>
-  </div>
-</div>
-
-<div class="mt-6">
-  <h3 class="text-xl text-yellow-500 mb-2">Méthode 3 : addEventListener (Recommandée)</h3>
-```js
-const bouton = document.querySelector('button');
-bouton.addEventListener('click', function() {
-  alert('Premier gestionnaire');
-});
-bouton.addEventListener('click', function() {
-  alert('Deuxième gestionnaire');
-});
-```
-  <div class="mt-2 text-green-500">✓ Gestionnaires multiples, plus de contrôle, séparation plus propre</div>
-</div>
-
----
 
 # Démo Interactive : Propagation d'Événements
 
@@ -639,45 +928,3 @@ vignettes.addEventListener('click', function(event) {
   }
 });
 ```
-
----
-class: text-center
----
-
-# Points Clés à Retenir
-
-<div class="grid grid-cols-2 gap-8">
-  <div class="text-left">
-    <h3 class="text-yellow-500 text-xl mb-4">Maîtrise du DOM</h3>
-    <ul>
-      <li>Comprendre la structure du DOM</li>
-      <li>Sélectionner et manipuler des éléments</li>
-      <li>Créer et supprimer des éléments</li>
-      <li>Gérer les attributs et styles des éléments</li>
-    </ul>
-  </div>
-  <div class="text-left">
-    <h3 class="text-yellow-500 text-xl mb-4">Maîtrise des Événements</h3>
-    <ul>
-      <li>Utiliser addEventListener</li>
-      <li>Comprendre la propagation des événements</li>
-      <li>Implémenter la délégation d'événements</li>
-      <li>Travailler avec divers types d'événements</li>
-      <li>Gérer correctement les interactions utilisateur</li>
-    </ul>
-  </div>
-</div>
-
-<div class="mt-8">
-  <p>Le DOM et les événements sont fondamentaux pour créer des applications web interactives !</p>
-</div>
-
----
-layout: end
----
-
-# Merci !
-
-<div class="text-xl">
-  Des Questions ? Discutons-en !
-</div>
