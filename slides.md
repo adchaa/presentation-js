@@ -1,6 +1,5 @@
 ---
 theme: geist
-background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
 highlighter: shiki
 mdc: true
@@ -496,7 +495,7 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
 
 <div class="flex items-center justify-center h-full">
   <div class="relative border-4 border-blue-500 p-8 w-64 h-64 rounded-lg">
-    <div class="text-center">Document</div>
+    <div class="text-center relative bottom-4">Document</div>
     <div class="absolute top-12 left-12 right-12 bottom-12 border-4 border-green-500 rounded-lg p-4">
       <div class="text-center">Parent</div>
       <div class="absolute top-12 left-8 right-8 bottom-8 border-4 border-red-500 rounded-lg flex items-center justify-center">
@@ -506,19 +505,20 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
   </div>
 </div>
 
+---
 
 # Démo Interactive : Propagation d'Événements
 
 <div class="grid grid-cols-2 gap-8">
   <div>
-    <div id="parent" class="bg-blue-200 p-8 rounded-lg relative">
+    <div id="parent" class="border-2 border-blue-200 p-8 rounded-lg relative">
       <div class="text-center mb-4">Élément Parent</div>
-      <div id="child" class="bg-green-200 p-6 rounded-lg">
+      <div id="child" class="border-2 border-green-200 p-6 rounded-lg">
         <div class="text-center mb-2">Élément Enfant</div>
-        <button id="btn" class="bg-red-500 text-white px-4 py-2 rounded">Cliquez-moi</button>
+        <button id="btn" class="border-2 border-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-500">Cliquez-moi</button>
       </div>
-      <div id="event-log" class="mt-4 text-sm h-32 overflow-y-auto bg-gray-100 p-2 rounded"></div>
     </div>
+    <div id="event-log" class="mt-4 h-32 overflow-y-auto border-2 border-gray-100 p-2 rounded text-white"></div>
   </div>
   <div>
 ```js
@@ -691,12 +691,9 @@ while (parent.firstChild) {
   <div>
     <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
 ```js
-// Au lieu d'ajouter un écouteur à chaque bouton
 document.getElementById('container').addEventListener('click', function(e) {
-  // Vérifier si l'élément cliqué est un bouton
   if (e.target.matches('button.action')) {
     console.log('Bouton cliqué:', e.target.textContent);
-    // Traiter l'événement
   }
 });
 ```
@@ -705,8 +702,6 @@ document.getElementById('container').addEventListener('click', function(e) {
 
 ```js
 function handleClick(e) {
-  console.log('Clic traité');
-  // Supprimer après la première utilisation
   e.currentTarget.removeEventListener('click', handleClick);
 }
 
@@ -718,24 +713,29 @@ element.addEventListener('click', handleClick);
     <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
 
 ```js
-// Options de base
 element.addEventListener('click', handler, {
   once: true,      // Se déclenche une seule fois puis se supprime
   capture: true,   // Capture pendant la phase descendante
   passive: true    // Indique que preventDefault() ne sera pas appelé
 });
 
-// Arrêter la propagation
 element.addEventListener('click', function(e) {
-  e.stopPropagation(); // Empêche la remontée aux parents
+  e.stopPropagation();
 });
 
-// Empêcher le comportement par défaut
 form.addEventListener('submit', function(e) {
   e.preventDefault(); // Empêche l'envoi du formulaire
-  // Validation ou soumission AJAX
 });
 ```
     <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
+  </div>
+</div>
+---
+layout: full
+--- 
+
+<div class="flex justify-center items-center w-full h-full">
+  <div class="text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+    Game of life
   </div>
 </div>
