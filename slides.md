@@ -15,7 +15,7 @@ info: |
 layout: two-cols
 ---
 
-# Ce Que Nous Allons Couvrir
+# Ce Que Nous Allons Couvrir (TODO : LAZMNI NBADIL FI PAGE HATHI)
 
 <div class="text-left">
 
@@ -403,95 +403,29 @@ bouton.addEventListener('click', function() {
 
 ---
 
-# Techniques Avancées d'Événements
-
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
-```js
-// Au lieu d'ajouter un écouteur à chaque bouton
-document.getElementById('container').addEventListener('click', function(e) {
-  // Vérifier si l'élément cliqué est un bouton
-  if (e.target.matches('button.action')) {
-    console.log('Bouton cliqué:', e.target.textContent);
-    // Traiter l'événement
-  }
-});
-```
-    <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
-    <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
-
-```js
-function handleClick(e) {
-  console.log('Clic traité');
-  // Supprimer après la première utilisation
-  e.currentTarget.removeEventListener('click', handleClick);
-}
-
-element.addEventListener('click', handleClick);
-```
-  </div>
-  
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
-
-```js
-// Options de base
-element.addEventListener('click', handler, {
-  once: true,      // Se déclenche une seule fois puis se supprime
-  capture: true,   // Capture pendant la phase descendante
-  passive: true    // Indique que preventDefault() ne sera pas appelé
-});
-
-// Arrêter la propagation
-element.addEventListener('click', function(e) {
-  e.stopPropagation(); // Empêche la remontée aux parents
-});
-
-// Empêcher le comportement par défaut
-form.addEventListener('submit', function(e) {
-  e.preventDefault(); // Empêche l'envoi du formulaire
-  // Validation ou soumission AJAX
-});
-```
-    <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
-  </div>
-</div>
-
----
-layout: two-cols
----
-
 # Mouse Hover
 
-<div class="flex h-full items-center justify-center">
-  <div id="mouse" class="flex justify-center items-center border-2 border-blue-400 rounded-lg w-72 h-72 bg-gray-800 text-blue-300 font-mono text-xl shadow-lg transition-all duration-300 hover:border-blue-500 hover:shadow-blue-400/30">
-    Déplacez le curseur ici
+<div class="grid grid-cols-2 gap-8 h-full">
+  <div class="flex flex-col justify-center pl-20 pt-10">
+    <div id="mouse" class="flex justify-center items-center border-2 border-blue-400 rounded-lg w-52 h-52 text-center bg-gray-800 text-blue-300 font-mono text-xl shadow-lg transition-all duration-300">
+      Déplacez le curseur ici
+    </div>
   </div>
-</div>
+  <div class="flex flex-col justify-center pl-4">
+    <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
+    
+  ```js
+  const mouse = document.getElementById("mouse");
 
-::right::
-
-<div class="flex flex-col h-full justify-center pl-4">
-  <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
-  
-```js
-const mouse = document.getElementById("mouse");
-
-mouse.addEventListener("mousemove", (e) => {
-  // Récupérer les coordonnées de la souris
-  const x = e.clientX;
-  const y = e.clientY;
-  
-  mouse.textContent = `(${x}, ${y})`;
-  
-  // Utiliser HSL pour une transition fluide des couleurs
-  const hue = (x % 360);
-  const saturation = Math.min(100, (y / window.innerHeight) * 100);
-  const lightness = 20 + Math.sin(x * 0.01) * 10;
-  mouse.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-});
-```
+  mouse.addEventListener("mousemove", (e) => {
+    // Récupérer les coordonnées de la souris
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    mouse.textContent = `(${x}, ${y})`;
+  });
+  ```
+  </div>
 </div>
 
 <script setup>
@@ -501,8 +435,6 @@ onMounted(() => {
   const mouse = document.getElementById("mouse")
   mouse.addEventListener("mousemove",(e)=>{
     mouse.textContent = `(${e.clientX}, ${e.clientY})`
-    const hue = (e.clientX % 360);
-    mouse.style.backgroundColor = `hsl(${hue}, 70%, 20%)`;
   })
 })
 </script>
@@ -714,221 +646,6 @@ while (parent.firstChild) {
 
 ---
 
-# Démo Interactive : Manipulation du DOM
-
-<div class="grid grid-cols-2 gap-8">
-  <div>
-    <div id="todo-app" class="w-full max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden p-4">
-      <h2 class="text-center text-xl font-bold mb-4">Liste de Tâches</h2>
-      <div class="flex mb-4">
-        <input id="todo-input" type="text" class="flex-1 border rounded-l px-4 py-2" placeholder="Ajouter un nouvel élément...">
-        <button id="add-button" class="bg-blue-500 text-white px-4 py-2 rounded-r">Ajouter</button>
-      </div>
-      <ul id="todo-list" class="divide-y"></ul>
-    </div>
-  </div>
-  <div>
-```js
-const saisie = document.getElementById('todo-input');
-const boutonAjouter = document.getElementById('add-button');
-const listeTaches = document.getElementById('todo-list');
-
-boutonAjouter.addEventListener('click', function() {
-  if (saisie.value.trim() === '') return;
-  
-  // Créer un élément de liste
-  const li = document.createElement('li');
-  li.className = 'py-2 flex justify-between items-center';
-  
-  // Créer le texte et le bouton de suppression
-  li.innerHTML = `
-    <span>${saisie.value}</span>
-    <button class="delete-btn text-red-500">×</button>
-  `;
-  
-  // Ajouter la fonctionnalité de suppression
-  li.querySelector('.delete-btn').addEventListener('click', 
-    function() {
-      li.remove();
-    });
-  
-  // Ajouter à la liste et effacer la saisie
-  listeTaches.appendChild(li);
-  saisie.value = '';
-});
-```
-  </div>
-</div>
-
-<script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const saisie = document.getElementById('todo-input')
-  const boutonAjouter = document.getElementById('add-button')
-  const listeTaches = document.getElementById('todo-list')
-  
-  if (saisie && boutonAjouter && listeTaches) {
-    boutonAjouter.addEventListener('click', function() {
-      if (saisie.value.trim() === '') return
-      
-      // Créer un élément de liste
-      const li = document.createElement('li')
-      li.className = 'py-2 flex justify-between items-center'
-      
-      // Créer le texte et le bouton de suppression
-      li.innerHTML = `
-        <span>${saisie.value}</span>
-        <button class="delete-btn text-red-500">×</button>
-      `
-      
-      // Ajouter la fonctionnalité de suppression
-      li.querySelector('.delete-btn').addEventListener('click', function() {
-        li.remove()
-      })
-      
-      // Ajouter à la liste et effacer la saisie
-      listeTaches.appendChild(li)
-      saisie.value = ''
-    })
-  }
-})
-</script>
-
----
-
-# Délégation d'Événements
-
-Tirez parti du bouillonnement d'événements pour gérer les événements de plusieurs éléments avec un seul écouteur.
-
-```html
-<ul id="task-list">
-  <li>Tâche 1</li>
-  <li>Tâche 2</li>
-  <li>Tâche 3</li>
-  <!-- Plus d'éléments peuvent être ajoutés dynamiquement -->
-</ul>
-```
-
-```js
-const listeTaches = document.getElementById('task-list');
-
-// Un seul écouteur d'événements pour tous les éléments, même ceux ajoutés ultérieurement
-listeTaches.addEventListener('click', function(evenement) {
-  // Vérifier si l'élément cliqué est un li
-  if (evenement.target.tagName === 'LI') {
-    evenement.target.classList.toggle('completed');
-  }
-});
-```
-
-<div class="mt-4 bg-green-100 p-4 rounded-lg">
-  <strong class="text-green-800">Avantages :</strong>
-  <ul class="text-green-800">
-    <li>Moins d'écouteurs d'événements = meilleures performances</li>
-    <li>Fonctionne pour les éléments ajoutés dynamiquement</li>
-    <li>Utilisation de mémoire réduite</li>
-  </ul>
-</div>
-
----
-
-# Événements DOM Courants
-
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Événements de Souris</h3>
-    <ul>
-      <li><code>click</code> - Quand un élément est cliqué</li>
-      <li><code>dblclick</code> - Quand un élément est double-cliqué</li>
-      <li><code>mousedown/mouseup</code> - Appui/relâchement du bouton de la souris</li>
-      <li><code>mouseover/mouseout</code> - Le curseur entre/quitte un élément</li>
-      <li><code>mousemove</code> - Le curseur se déplace sur un élément</li>
-    </ul>
-  </div>
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Événements Clavier</h3>
-    <ul>
-      <li><code>keydown</code> - Quand une touche est enfoncée</li>
-      <li><code>keyup</code> - Quand une touche est relâchée</li>
-      <li><code>keypress</code> - Quand une touche est pressée (touches de caractères)</li>
-    </ul>
-    
-    <h3 class="text-yellow-500 text-xl mb-2 mt-4">Événements de Formulaire</h3>
-    <ul>
-      <li><code>submit</code> - Quand un formulaire est soumis</li>
-      <li><code>change</code> - Quand la valeur d'un contrôle de formulaire change</li>
-      <li><code>input</code> - Quand la valeur d'un élément input change</li>
-      <li><code>focus/blur</code> - Quand un élément obtient/perd le focus</li>
-    </ul>
-  </div>
-</div>
-
----
-
-# Démo Interactive : Types d'Événements
-
-<div class="w-full max-w-lg mx-auto">
-  <div id="event-sandbox" class="bg-white p-6 rounded-lg shadow-lg">
-    <div class="mb-6">
-      <h3 class="text-lg font-bold mb-2">Terrain de Jeu d'Événements</h3>
-      <p class="text-sm">Interagissez avec l'élément ci-dessous pour voir différents événements en action</p>
-    </div>
-    
-    <div id="event-target" class="w-full h-32 bg-blue-100 border-2 border-blue-300 rounded-lg flex items-center justify-center text-lg font-medium cursor-pointer">
-      Interagissez avec moi !
-    </div>
-    
-    <div class="mt-4">
-      <h4 class="font-bold">Journal d'Événements :</h4>
-      <div id="event-monitor" class="mt-2 h-32 overflow-y-auto bg-gray-100 p-2 rounded text-sm font-mono"></div>
-    </div>
-  </div>
-</div>
-
-<script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const cible = document.getElementById('event-target')
-  const moniteur = document.getElementById('event-monitor')
-  
-  if (cible && moniteur) {
-    const typesEvenements = ['click', 'dblclick', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'contextmenu']
-    
-    function enregistrerEvenement(e) {
-      const log = document.createElement('div')
-      log.textContent = `${e.type} à (${e.clientX}, ${e.clientY})`
-      moniteur.prepend(log)
-    }
-    
-    typesEvenements.forEach(type => {
-      cible.addEventListener(type, enregistrerEvenement)
-    })
-  }
-})
-</script>
-
-```js
-const cible = document.getElementById('event-target');
-const moniteur = document.getElementById('event-monitor');
-
-const typesEvenements = ['click', 'dblclick', 'mouseenter', 'mouseleave', 
-                         'mousedown', 'mouseup', 'contextmenu'];
-
-function enregistrerEvenement(e) {
-  const log = document.createElement('div');
-  log.textContent = `${e.type} à (${e.clientX}, ${e.clientY})`;
-  moniteur.prepend(log);
-}
-
-typesEvenements.forEach(type => {
-  cible.addEventListener(type, enregistrerEvenement);
-});
-```
-
----
-
 # Bonnes Pratiques
 
 <div class="grid grid-cols-2 gap-6">
@@ -941,7 +658,6 @@ typesEvenements.forEach(type => {
       <li>Envisagez d'utiliser `requestAnimationFrame` pour les animations</li>
       <li>Évitez le "layout thrashing" (alternance de lectures et écritures)</li>
     </ul>
-    
     <h3 class="text-yellow-500 text-xl mb-2 mt-4">Organisation du Code</h3>
     <ul>
       <li>Séparez la logique de la manipulation DOM</li>
@@ -956,7 +672,6 @@ typesEvenements.forEach(type => {
       <li>Utilisez try/catch pour les opérations DOM risquées</li>
       <li>Validez les saisies utilisateur avant de les traiter</li>
     </ul>
-    
     <h3 class="text-yellow-500 text-xl mb-2 mt-4">Accessibilité</h3>
     <ul>
       <li>Utilisez des éléments HTML sémantiques</li>
@@ -970,76 +685,57 @@ typesEvenements.forEach(type => {
 
 ---
 
-# Construisons Quelque Chose Ensemble
+# Techniques Avancées d'Événements
 
-<div class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-  <h3 class="text-xl font-bold mb-4">Galerie d'Images Interactive</h3>
-  
-  <div id="gallery-container" class="mb-4">
-    <div id="main-image" class="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
-      <span class="text-gray-500">Sélectionnez une vignette</span>
-    </div>
-    
-    <div id="thumbnails" class="grid grid-cols-4 gap-2">
-      <div class="thumbnail h-16 bg-blue-300 rounded cursor-pointer" data-color="blue"></div>
-      <div class="thumbnail h-16 bg-red-300 rounded cursor-pointer" data-color="red"></div>
-      <div class="thumbnail h-16 bg-green-300 rounded cursor-pointer" data-color="green"></div>
-      <div class="thumbnail h-16 bg-yellow-300 rounded cursor-pointer" data-color="yellow"></div>
-    </div>
-  </div>
-  
-  <div class="text-sm">
-    Ensemble, nous allons implémenter la fonctionnalité de galerie en direct !
-  </div>
-</div>
-
-<script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const imageprincipale = document.getElementById('main-image')
-  const vignettes = document.getElementById('thumbnails')
-  
-  if (imageprincipale && vignettes) {
-    vignettes.addEventListener('click', function(event) {
-      if (event.target.classList.contains('thumbnail')) {
-        const couleur = event.target.dataset.color
-        imageprincipale.style.backgroundColor = `${couleur}`
-        
-        let texte = 'BLEU'
-        if (couleur === 'red') texte = 'ROUGE'
-        if (couleur === 'green') texte = 'VERT'
-        if (couleur === 'yellow') texte = 'JAUNE'
-        
-        imageprincipale.innerHTML = `<span class="text-white font-bold">${texte} sélectionné</span>`
-      }
-    })
-  }
-})
-</script>
-
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
 ```js
-// Exemple de code pour la galerie
-const imageprincipale = document.getElementById('main-image');
-const vignettes = document.getElementById('thumbnails');
-
-// Utiliser la délégation d'événements pour toutes les vignettes
-vignettes.addEventListener('click', function(event) {
-  if (event.target.classList.contains('thumbnail')) {
-    const couleur = event.target.dataset.color;
-    
-    // Mettre à jour l'image principale
-    imageprincipale.style.backgroundColor = `${couleur}`;
-    
-    // Traduire les couleurs en français
-    let texte = 'BLEU';
-    if (couleur === 'red') texte = 'ROUGE';
-    if (couleur === 'green') texte = 'VERT'; 
-    if (couleur === 'yellow') texte = 'JAUNE';
-    
-    imageprincipale.innerHTML = `<span class="text-white font-bold">
-      ${texte} sélectionné
-    </span>`;
+// Au lieu d'ajouter un écouteur à chaque bouton
+document.getElementById('container').addEventListener('click', function(e) {
+  // Vérifier si l'élément cliqué est un bouton
+  if (e.target.matches('button.action')) {
+    console.log('Bouton cliqué:', e.target.textContent);
+    // Traiter l'événement
   }
 });
 ```
+    <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
+    <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
+
+```js
+function handleClick(e) {
+  console.log('Clic traité');
+  // Supprimer après la première utilisation
+  e.currentTarget.removeEventListener('click', handleClick);
+}
+
+element.addEventListener('click', handleClick);
+```
+  </div>
+  
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
+
+```js
+// Options de base
+element.addEventListener('click', handler, {
+  once: true,      // Se déclenche une seule fois puis se supprime
+  capture: true,   // Capture pendant la phase descendante
+  passive: true    // Indique que preventDefault() ne sera pas appelé
+});
+
+// Arrêter la propagation
+element.addEventListener('click', function(e) {
+  e.stopPropagation(); // Empêche la remontée aux parents
+});
+
+// Empêcher le comportement par défaut
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Empêche l'envoi du formulaire
+  // Validation ou soumission AJAX
+});
+```
+    <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
+  </div>
+</div>
