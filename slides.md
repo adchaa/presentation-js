@@ -513,7 +513,7 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
   <div>
     <div id="parent" class="border-2 border-blue-200 p-8 rounded-lg relative">
       <div class="text-center mb-4">Élément Parent</div>
-      <div id="child" class="border-2 border-green-200 p-6 rounded-lg">
+      <div id="enfant" class="border-2 border-green-200 p-6 rounded-lg">
         <div class="text-center mb-2">Élément Enfant</div>
         <button id="btn" class="border-2 border-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-500">Cliquez-moi</button>
       </div>
@@ -523,7 +523,7 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
   <div>
 ```js
 const parent = document.getElementById('parent');
-const enfant = document.getElementById('child');
+const enfant = document.getElementById('enfant');
 const bouton = document.getElementById('btn');
 const journal = document.getElementById('event-log');
 
@@ -545,7 +545,7 @@ import { onMounted } from 'vue'
 
 onMounted(() => {
   const parent = document.getElementById('parent')
-  const enfant = document.getElementById('child')
+  const enfant = document.getElementById('enfant')
   const bouton = document.getElementById('btn')
   const journal = document.getElementById('event-log')
   
@@ -562,126 +562,6 @@ onMounted(() => {
   }
 })
 </script>
-
----
-
-# Manipulation du DOM
-
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Sélection d'Éléments</h3>
-```js
-// Par ID
-const element = document.getElementById('monId');
-
-// Par nom de classe
-const elements = document.getElementsByClassName('maClasse');
-
-// Par nom de balise
-const divs = document.getElementsByTagName('div');
-
-// Sélecteurs CSS
-const premierPara = document.querySelector('p.intro');
-const tousLesLiens = document.querySelectorAll('a.externe');
-```
-  </div>
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Modification d'Éléments</h3>
-```js
-// Changer le contenu
-element.textContent = 'Nouveau texte';
-element.innerHTML = '<strong>Texte en gras</strong>';
-
-// Modifier les attributs
-element.setAttribute('class', 'surligne');
-element.id = 'nouvelId';
-
-// Changer les styles
-element.style.color = 'red';
-element.style.backgroundColor = '#f0f0f0';
-```
-  </div>
-</div>
-
----
-
-# Création et Suppression d'Éléments
-
-<div class="grid grid-cols-2 gap-4">
-<div>
-  <h3 class="text-yellow-500 text-xl mb-2">Création d'Éléments</h3>
-```js
-// Créer un nouvel élément
-const nouvDiv = document.createElement('div');
-
-// Ajouter du contenu
-nouvDiv.textContent = 'Je suis une nouvelle div !';
-
-// Ajouter du style
-nouvDiv.className = 'nouvel-element';
-
-// Ajouter au DOM
-document.body.appendChild(nouvDiv);
-```
-</div>
-
-
-<div>
-  <h3 class="text-yellow-500 text-xl mb-2">Suppression d'Éléments</h3>
-```js
-// Méthode 1 : Supprimer directement
-element.remove();
-
-// Méthode 2 : Supprimer du parent
-const parent = element.parentNode;
-parent.removeChild(element);
-
-// Effacer tous les enfants
-while (parent.firstChild) {
-  parent.removeChild(parent.firstChild);
-}
-```
-</div>
-</div>
-
----
-
-# Bonnes Pratiques
-
-<div class="grid grid-cols-2 gap-6">
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Performance</h3>
-    <ul>
-      <li>Utilisez la délégation d'événements pour plusieurs éléments</li>
-      <li>Évitez les manipulations DOM excessives</li>
-      <li>Regroupez les mises à jour DOM quand c'est possible</li>
-      <li>Envisagez d'utiliser `requestAnimationFrame` pour les animations</li>
-      <li>Évitez le "layout thrashing" (alternance de lectures et écritures)</li>
-    </ul>
-    <h3 class="text-yellow-500 text-xl mb-2 mt-4">Organisation du Code</h3>
-    <ul>
-      <li>Séparez la logique de la manipulation DOM</li>
-      <li>Utilisez des noms de variables descriptifs</li>
-      <li>Commentez les opérations DOM complexes</li>
-    </ul>
-  </div>
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Gestion des Erreurs</h3>
-    <ul>
-      <li>Vérifiez toujours si les éléments existent avant de les manipuler</li>
-      <li>Utilisez try/catch pour les opérations DOM risquées</li>
-      <li>Validez les saisies utilisateur avant de les traiter</li>
-    </ul>
-    <h3 class="text-yellow-500 text-xl mb-2 mt-4">Accessibilité</h3>
-    <ul>
-      <li>Utilisez des éléments HTML sémantiques</li>
-      <li>Assurez-vous que la navigation au clavier fonctionne</li>
-      <li>Maintenez la gestion du focus</li>
-      <li>Ajoutez les attributs ARIA appropriés</li>
-      <li>Testez avec des lecteurs d'écran</li>
-    </ul>
-  </div>
-</div>
 
 ---
 
@@ -730,12 +610,78 @@ form.addEventListener('submit', function(e) {
     <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
   </div>
 </div>
+
+---
+
+# Bonnes Pratiques
+
+<div class="grid grid-cols-2 gap-6">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Performance</h3>
+    <ul>
+      <li>Utilisez la délégation d'événements pour plusieurs éléments</li>
+      <li>Évitez les manipulations DOM excessives</li>
+      <li>Regroupez les mises à jour DOM quand c'est possible</li>
+      <li>Envisagez d'utiliser `requestAnimationFrame` pour les animations</li>
+      <li>Évitez le "layout thrashing" (alternance de lectures et écritures)</li>
+    </ul>
+    <h3 class="text-yellow-500 text-xl mb-2 mt-4">Organisation du Code</h3>
+    <ul>
+      <li>Séparez la logique de la manipulation DOM</li>
+      <li>Utilisez des noms de variables descriptifs</li>
+      <li>Commentez les opérations DOM complexes</li>
+    </ul>
+  </div>
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Gestion des Erreurs</h3>
+    <ul>
+      <li>Vérifiez toujours si les éléments existent avant de les manipuler</li>
+      <li>Utilisez try/catch pour les opérations DOM risquées</li>
+      <li>Validez les saisies utilisateur avant de les traiter</li>
+    </ul>
+    <h3 class="text-yellow-500 text-xl mb-2 mt-4">Accessibilité</h3>
+    <ul>
+      <li>Utilisez des éléments HTML sémantiques</li>
+      <li>Assurez-vous que la navigation au clavier fonctionne</li>
+      <li>Maintenez la gestion du focus</li>
+      <li>Ajoutez les attributs ARIA appropriés</li>
+      <li>Testez avec des lecteurs d'écran</li>
+    </ul>
+  </div>
+</div>
+
 ---
 layout: full
 --- 
 
 <div class="flex justify-center items-center w-full h-full">
   <div class="text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-    Game of life
+    Conway's Game of Life
   </div>
+</div>
+
+---
+
+# Le Jeu de la Vie de Conway
+
+<div>
+  <h2 class="text-yellow-500 text-xl mb-2">Les Règles</h2>
+  <ul className="space-y-6 text-xl">
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">1.</span>
+      <span>Une cellule vivante avec moins de 2 voisines vivantes meurt (sous-population)</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">2.</span>
+      <span>Une cellule vivante avec 2 ou 3 voisines vivantes survit</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">3.</span>
+      <span>Une cellule vivante avec plus de 3 voisines vivantes meurt (surpopulation)</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 mr-3">4.</span>
+      <span>Une cellule morte avec exactement 3 voisines vivantes devient vivante (reproduction)</span>
+    </li>
+  </ul>
 </div>
