@@ -274,6 +274,97 @@ document.write('<p>Nouveau contenu</p>');
 
 ---
 
+# De la Manipulation du DOM aux Événements
+
+<div class="flex flex-col items-center justify-center h-80">
+  <div class="text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+    Structure ⟹ Interaction
+  </div>
+  <div class="grid grid-cols-2 gap-8">
+    <div class="flex flex-col items-center">
+      <div class="text-6xl mb-4">🏗️</div>
+      <div class="text-center">
+        <div class="text-xl font-semibold text-blue-400">Manipulation du DOM</div>
+        <div class="text-sm text-gray-400 mt-2">Création et modification d'éléments</div>
+      </div>
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="text-6xl mb-4">🖱️</div>
+      <div class="text-center">
+        <div class="text-xl font-semibold text-purple-500">Événements</div>
+        <div class="text-sm text-gray-400 mt-2">Interactivité et réponse aux actions</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+---
+
+# Événements HTML Courants
+
+<div class="grid grid-cols-3 gap-4">
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Événements Souris</h3>
+    <ul class="space-y-1 text-sm">
+      <li><code>onclick</code> - Clic sur l'élément</li>
+      <li><code>ondblclick</code> - Double clic</li>
+      <li><code>onmouseover</code> - Souris entre dans l'élément</li>
+      <li><code>onmouseout</code> - Souris quitte l'élément</li>
+      <li><code>onmousedown</code> - Bouton souris enfoncé</li>
+      <li><code>onmouseup</code> - Bouton souris relâché</li>
+      <li><code>onmousemove</code> - Souris déplacée sur élément</li>
+      <li><code>oncontextmenu</code> - Clic droit (menu contextuel)</li>
+    </ul>
+  </div>
+  
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Formulaires & Clavier</h3>
+    <ul class="space-y-1 text-sm">
+      <li><code>onsubmit</code> - Formulaire soumis</li>
+      <li><code>onreset</code> - Formulaire réinitialisé</li>
+      <li><code>onfocus</code> - Élément reçoit le focus</li>
+      <li><code>onblur</code> - Élément perd le focus</li>
+      <li><code>onchange</code> - Valeur du champ changée</li>
+      <li><code>oninput</code> - Saisie dans champ de texte</li>
+      <li><code>onkeydown</code> - Touche enfoncée</li>
+      <li><code>onkeyup</code> - Touche relâchée</li>
+      <li><code>onkeypress</code> - Touche pressée (caractère)</li>
+      <li><code>onselect</code> - Texte sélectionné</li>
+    </ul>
+  </div>
+  
+  <div>
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2">Document & Ressources</h3>
+    <ul class="space-y-1 text-sm">
+      <li><code>onload</code> - Élément chargé</li>
+      <li><code>onunload</code> - Page déchargée</li>
+      <li><code>onresize</code> - Fenêtre redimensionnée</li>
+      <li><code>onscroll</code> - Défilement de la page</li>
+      <li><code>onerror</code> - Erreur de chargement</li>
+      <li><code>onabort</code> - Chargement interrompu</li>
+      <li><code>onbeforeunload</code> - Avant déchargement</li>
+    </ul>
+    
+  </div>
+  <div>
+    <h3 class="text-yellow-500 text-xl mb-2 mt-3">Tactile</h3>
+    <ul class="space-y-1 text-sm">
+      <li><code>ontouchstart</code> - Début toucher</li>
+      <li><code>ontouchend</code> - Fin toucher</li>
+      <li><code>ontouchmove</code> - Mouvement tactile</li>
+    </ul>
+  </div>
+  </div>
+</div>
+
+<div class="mt-4 p-3 rounded-lg text-center text-sm">
+  <span class="font-bold">Note:</span> Tous ces événements peuvent être utilisés comme attributs HTML (onclick="...") 
+  <br>ou attachés via JavaScript avec addEventListener('click', ...)
+</div>
+
+---
+
 # Méthodes de Gestion des Événements
 
 <div class="grid grid-cols-2 gap-4">
@@ -328,8 +419,8 @@ document.getElementById('container').addEventListener('click', function(e) {
 });
 ```
     <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
-    
     <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
+
 ```js
 function handleClick(e) {
   console.log('Clic traité');
@@ -343,6 +434,7 @@ element.addEventListener('click', handleClick);
   
   <div>
     <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
+
 ```js
 // Options de base
 element.addEventListener('click', handler, {
@@ -367,19 +459,40 @@ form.addEventListener('submit', function(e) {
 </div>
 
 ---
+layout: two-cols
+---
 
 # Mouse Hover
 
-<div id="mouse"  class="flex justify-center items-center border-2 rounded w-40 h-40">
-  déplacer le curseur 
+<div class="flex h-full items-center justify-center">
+  <div id="mouse" class="flex justify-center items-center border-2 border-blue-400 rounded-lg w-72 h-72 bg-gray-800 text-blue-300 font-mono text-xl shadow-lg transition-all duration-300 hover:border-blue-500 hover:shadow-blue-400/30">
+    Déplacez le curseur ici
+  </div>
 </div>
 
+::right::
+
+<div class="flex flex-col h-full justify-center pl-4">
+  <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
+  
 ```js
-  const mouse = document.getElementById("mouse")
-  mouse.addEventListener("mousemove",(e)=>{
-    mouse.textContent = `(${e.x},${e.y})`
-  })
+const mouse = document.getElementById("mouse");
+
+mouse.addEventListener("mousemove", (e) => {
+  // Récupérer les coordonnées de la souris
+  const x = e.clientX;
+  const y = e.clientY;
+  
+  mouse.textContent = `(${x}, ${y})`;
+  
+  // Utiliser HSL pour une transition fluide des couleurs
+  const hue = (x % 360);
+  const saturation = Math.min(100, (y / window.innerHeight) * 100);
+  const lightness = 20 + Math.sin(x * 0.01) * 10;
+  mouse.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+});
 ```
+</div>
 
 <script setup>
 import { onMounted } from 'vue'
@@ -387,7 +500,9 @@ import { onMounted } from 'vue'
 onMounted(() => {
   const mouse = document.getElementById("mouse")
   mouse.addEventListener("mousemove",(e)=>{
-    mouse.textContent = `(${e.x},${e.y})`
+    mouse.textContent = `(${e.clientX}, ${e.clientY})`
+    const hue = (e.clientX % 360);
+    mouse.style.backgroundColor = `hsl(${hue}, 70%, 20%)`;
   })
 })
 </script>
