@@ -443,9 +443,8 @@ onMounted(() => {
 
 # Démo : Écouteurs d'Événements
 
-<button id="demo-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Cliquez-moi
-</button>
+<div class="flex flex-col gap-9 h-full items-center justify-center mt-20">
+  <div class="flex h-full items-center">
 
 ```js
 const bouton = document.getElementById('demo-button');
@@ -454,6 +453,11 @@ bouton.addEventListener('click', function() {
   bouton.style.backgroundColor = getRandomColor()
 });
 ```
+  </div>
+  <button id="demo-button" class="bg-gray-900 border-1 border-blue hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">
+    Cliquez-moi
+  </button>
+</div>
 
 <script setup>
 import { onMounted } from 'vue'
@@ -465,7 +469,7 @@ onMounted(() => {
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
-    return color;
+    return color + "A0";
   }
   const bouton = document.getElementById('demo-button');
 
