@@ -10,31 +10,63 @@ info: |
 # Événements JavaScript et Manipulation du DOM
 
 ---
-layout: two-cols
----
 
-# Ce Que Nous Allons Couvrir (TODO : LAZMNI NBADIL FI PAGE HATHI)
+# Table des Matières
 
-<div class="text-left">
-
-- JavaScript et le DOM
-- Comprendre les Événements
-- Gestion des Événements
-- Propagation des Événements
-- Événements DOM Courants
-- Manipulation du DOM
-- Exemples Pratiques
-- Bonnes Pratiques
-
-</div>
-
-::right::
-
-<div class="flex justify-center h-full items-center">
-  <div class="w-40 h-40 bg-yellow-500 rounded-lg shadow-xl flex items-center justify-center transform hover:rotate-45 transition-transform duration-500 cursor-pointer">
-    <span class="text-xl font-bold text-white">Survolez-moi !</span>
+<div class="text-left flex items-center justify-around gap-20 w-full mt-20">
+  <div>
+    <div class="text-7xl text-center">🔧</div>
+    <h3 class="text-xl text-blue-400 font-bold">1. Manipulation du DOM</h3>
+    <ul class="mt-2 space-y-1">
+      <li>• Structure du DOM</li>
+      <li>• Sélection d'éléments</li>
+      <li>• Modification d'éléments</li>
+      <li>• Création et suppression</li>
+    </ul>
+  </div>
+  <div>
+    <div class="text-7xl text-center">🔔</div>
+    <h3 class="text-xl text-purple-400 font-bold">2. Événements JavaScript</h3>
+    <ul class="mt-2 space-y-1">
+      <li>• Types d'événements</li>
+      <li>• Gestion des événements</li>
+      <li>• Propagation</li>
+      <li>• Bonnes pratiques</li>
+    </ul>
+  </div>
+  <div>
+    <div class="text-7xl text-center">🎮</div>
+    <h3 class="text-xl text-amber-400 font-bold">3. Démo: Game</h3>
+    <ul class="mt-2 space-y-1">
+      <li>• Règles du jeu</li>
+      <li>• Implémentation interactive</li>
+      <li>• Démonstration en direct</li>
+      <li>• Exploration du code</li>
+    </ul>
   </div>
 </div>
+
+<div class="absolute bottom-10 w-full flex justify-center">
+  <div id="suivez-nous" class="cursor-pointer text-center text-xl text-blue-400 animate-pulse">
+    Suivez nous
+    <div class="flex justify-center">
+      <div class="arrow-down text-3xl">>></div>
+    </div>
+  </div>
+</div>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const suivezNous = document.getElementById('suivez-nous')
+  if (suivezNous) {
+    suivezNous.addEventListener('click', () => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }))
+    })
+  }
+})
+</script>
 
 ---
 
@@ -530,8 +562,6 @@ onMounted(() => {
 </script>
 
 ---
-layout: two-cols
----
 
 # Propagation des Événements
 
@@ -723,20 +753,135 @@ layout: full
   <h2 class="text-yellow-500 text-xl mb-2">Les Règles</h2>
   <ul className="space-y-6 text-xl">
     <li className="flex items-start">
+      <div id="rule1-demo" class="grid grid-cols-3 gap-0.5 mr-4 bg-gray-800 p-1 rounded">
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+      </div>
       <span className="text-amber-400 text-xl mr-3">1.</span>
-      <span>Une cellule vivante avec moins de 2 voisines vivantes meurt (sous-population)</span>
+      <span className="text-amber-400 text-xl mr-3">Une cellule vivante avec moins de 2 voisines vivantes meurt (sous-population)</span>
     </li>
     <li className="flex items-start">
+      <div id="rule2-demo" class="grid grid-cols-3 gap-0.5 mr-4 bg-gray-800 p-1 rounded">
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+      </div>
       <span className="text-amber-400 text-xl mr-3">2.</span>
-      <span>Une cellule vivante avec 2 ou 3 voisines vivantes survit</span>
+      <span className="text-amber-400 text-xl mr-3">Une cellule vivante avec 2 ou 3 voisines vivantes survit</span>
     </li>
     <li className="flex items-start">
+      <div id="rule3-demo" class="grid grid-cols-3 gap-0.5 mr-4 bg-gray-800 p-1 rounded">
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+      </div>
       <span className="text-amber-400 text-xl mr-3">3.</span>
-      <span>Une cellule vivante avec plus de 3 voisines vivantes meurt (surpopulation)</span>
+      <span className="text-amber-400 text-xl mr-3">Une cellule vivante avec plus de 3 voisines vivantes meurt (surpopulation)</span>
     </li>
     <li className="flex items-start">
+      <div id="rule4-demo" class="grid grid-cols-3 gap-0.5 mr-4 bg-gray-800 p-1 rounded">
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="cell-dead w-3 h-3 bg-gray-700"></div>
+        <div class="cell-alive w-3 h-3 bg-amber-400"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+        <div class="w-3 h-3 bg-gray-700"></div>
+      </div>
       <span className="text-amber-400 mr-3">4.</span>
-      <span>Une cellule morte avec exactement 3 voisines vivantes devient vivante (reproduction)</span>
+      <span className="text-amber-400 text-xl mr-3">Une cellule morte avec exactement 3 voisines vivantes devient vivante (reproduction)</span>
     </li>
   </ul>
+</div>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const rule1Demo = document.getElementById('rule1-demo')
+  if (rule1Demo) {
+    setInterval(() => {
+      const cells = rule1Demo.querySelectorAll('.cell-alive')
+      cells.forEach(cell => {
+        cell.classList.toggle('bg-amber-400')
+        cell.classList.toggle('bg-gray-700')
+      })
+    }, 1000)
+  }
+  
+  const rule2Demo = document.getElementById('rule2-demo')
+  if (rule2Demo) {
+    setInterval(() => {
+      const centerCell = rule2Demo.querySelectorAll('.cell-alive')[2]
+      if (centerCell) {
+        centerCell.classList.add('bg-amber-400')
+        centerCell.classList.add('scale-110')
+        setTimeout(() => {
+          centerCell.classList.remove('scale-110')
+        }, 500)
+      }
+    }, 1500)
+  }
+  
+  const rule3Demo = document.getElementById('rule3-demo')
+  if (rule3Demo) {
+    setInterval(() => {
+      const centerCell = rule3Demo.querySelectorAll('.cell-alive')[4]
+      if (centerCell) {
+        centerCell.classList.toggle('bg-amber-400')
+        centerCell.classList.toggle('bg-gray-700')
+      }
+    }, 1000)
+  }
+  
+  const rule4Demo = document.getElementById('rule4-demo')
+  if (rule4Demo) {
+    setInterval(() => {
+      const deadCell = rule4Demo.querySelector('.cell-dead')
+      if (deadCell) {
+        deadCell.classList.toggle('bg-gray-700')
+        deadCell.classList.toggle('bg-amber-400')
+      }
+    }, 1000)
+  }
+})
+</script>
+
+---
+layout: full
+---
+
+<div class="flex flex-col items-center justify-center h-full">
+  <div class="text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
+    Merci
+  </div>
+  <div class="text-2xl text-gray-400 mt-4">
+    Des questions ?
+  </div>
+  <div class="mt-12 flex gap-8">
+    <div class="animate-bounce text-4xl">👨‍💻</div>
+    <div class="animate-pulse text-4xl">🚀</div>
+    <div class="animate-bounce text-4xl">🎮</div>
+  </div>
 </div>
