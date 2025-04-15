@@ -7,7 +7,7 @@
 
 <style>
 .slidev-layout {
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
+  padding-left: 1.4rem !important;
+  padding-right: 1.4rem !important;
 }
 </style>
