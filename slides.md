@@ -1,6 +1,5 @@
 ---
 theme: geist
-background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
 highlighter: shiki
 mdc: true
@@ -548,7 +547,7 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
 
 <div class="flex items-center justify-center h-full">
   <div class="relative border-4 border-blue-500 p-8 w-64 h-64 rounded-lg">
-    <div class="text-center">Document</div>
+    <div class="text-center relative bottom-4">Document</div>
     <div class="absolute top-12 left-12 right-12 bottom-12 border-4 border-green-500 rounded-lg p-4">
       <div class="text-center">Parent</div>
       <div class="absolute top-12 left-8 right-8 bottom-8 border-4 border-red-500 rounded-lg flex items-center justify-center">
@@ -558,24 +557,25 @@ Les événements dans le DOM remontent de l'élément cible jusqu'à la racine.
   </div>
 </div>
 
+---
 
 # Démo Interactive : Propagation d'Événements
 
 <div class="grid grid-cols-2 gap-8">
   <div>
-    <div id="parent" class="bg-blue-200 p-8 rounded-lg relative">
+    <div id="parent" class="border-2 border-blue-200 p-8 rounded-lg relative">
       <div class="text-center mb-4">Élément Parent</div>
-      <div id="child" class="bg-green-200 p-6 rounded-lg">
+      <div id="enfant" class="border-2 border-green-200 p-6 rounded-lg">
         <div class="text-center mb-2">Élément Enfant</div>
-        <button id="btn" class="bg-red-500 text-white px-4 py-2 rounded">Cliquez-moi</button>
+        <button id="btn" class="border-2 border-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-500">Cliquez-moi</button>
       </div>
-      <div id="event-log" class="mt-4 text-sm h-32 overflow-y-auto bg-gray-100 p-2 rounded"></div>
     </div>
+    <div id="event-log" class="mt-4 h-32 overflow-y-auto border-2 border-gray-100 p-2 rounded text-white"></div>
   </div>
   <div>
 ```js
 const parent = document.getElementById('parent');
-const enfant = document.getElementById('child');
+const enfant = document.getElementById('enfant');
 const bouton = document.getElementById('btn');
 const journal = document.getElementById('event-log');
 
@@ -597,7 +597,7 @@ import { onMounted } from 'vue'
 
 onMounted(() => {
   const parent = document.getElementById('parent')
-  const enfant = document.getElementById('child')
+  const enfant = document.getElementById('enfant')
   const bouton = document.getElementById('btn')
   const journal = document.getElementById('event-log')
   
@@ -617,83 +617,50 @@ onMounted(() => {
 
 ---
 
-# Manipulation du DOM
+# Techniques Avancées d'Événements
 
 <div class="grid grid-cols-2 gap-4">
   <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Sélection d'Éléments</h3>
+    <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
 ```js
-// Par ID
-const element = document.getElementById('monId');
-
-// Par nom de classe
-const elements = document.getElementsByClassName('maClasse');
-
-// Par nom de balise
-const divs = document.getElementsByTagName('div');
-
-// Sélecteurs CSS
-const premierPara = document.querySelector('p.intro');
-const tousLesLiens = document.querySelectorAll('a.externe');
+document.getElementById('container').addEventListener('click', function(e) {
+  if (e.target.matches('button.action')) {
+    console.log('Bouton cliqué:', e.target.textContent);
+  }
+});
 ```
-  </div>
-  <div>
-    <h3 class="text-yellow-500 text-xl mb-2">Modification d'Éléments</h3>
+    <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
+    <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
+
 ```js
-// Changer le contenu
-element.textContent = 'Nouveau texte';
-element.innerHTML = '<strong>Texte en gras</strong>';
-
-// Modifier les attributs
-element.setAttribute('class', 'surligne');
-element.id = 'nouvelId';
-
-// Changer les styles
-element.style.color = 'red';
-element.style.backgroundColor = '#f0f0f0';
-```
-  </div>
-</div>
-
----
-
-# Création et Suppression d'Éléments
-
-<div class="grid grid-cols-2 gap-4">
-<div>
-  <h3 class="text-yellow-500 text-xl mb-2">Création d'Éléments</h3>
-```js
-// Créer un nouvel élément
-const nouvDiv = document.createElement('div');
-
-// Ajouter du contenu
-nouvDiv.textContent = 'Je suis une nouvelle div !';
-
-// Ajouter du style
-nouvDiv.className = 'nouvel-element';
-
-// Ajouter au DOM
-document.body.appendChild(nouvDiv);
-```
-</div>
-
-
-<div>
-  <h3 class="text-yellow-500 text-xl mb-2">Suppression d'Éléments</h3>
-```js
-// Méthode 1 : Supprimer directement
-element.remove();
-
-// Méthode 2 : Supprimer du parent
-const parent = element.parentNode;
-parent.removeChild(element);
-
-// Effacer tous les enfants
-while (parent.firstChild) {
-  parent.removeChild(parent.firstChild);
+function handleClick(e) {
+  e.currentTarget.removeEventListener('click', handleClick);
 }
+
+element.addEventListener('click', handleClick);
 ```
-</div>
+  </div>
+  
+  <div>
+    <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
+
+```js
+element.addEventListener('click', handler, {
+  once: true,      // Se déclenche une seule fois puis se supprime
+  capture: true,   // Capture pendant la phase descendante
+  passive: true    // Indique que preventDefault() ne sera pas appelé
+});
+
+element.addEventListener('click', function(e) {
+  e.stopPropagation();
+});
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Empêche l'envoi du formulaire
+});
+```
+    <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
+  </div>
 </div>
 
 ---
@@ -736,58 +703,37 @@ while (parent.firstChild) {
 </div>
 
 ---
+layout: full
+--- 
 
-# Techniques Avancées d'Événements
-
-<div class="grid grid-cols-2 gap-4">
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Délégation d'Événements</h3>
-```js
-// Au lieu d'ajouter un écouteur à chaque bouton
-document.getElementById('container').addEventListener('click', function(e) {
-  // Vérifier si l'élément cliqué est un bouton
-  if (e.target.matches('button.action')) {
-    console.log('Bouton cliqué:', e.target.textContent);
-    // Traiter l'événement
-  }
-});
-```
-    <div class="mt-2 text-green-500">✓ Parfait pour les éléments dynamiques</div>
-    <h3 class="text-xl text-yellow-500 mb-4 mt-4">Supprimer des Écouteurs</h3>
-
-```js
-function handleClick(e) {
-  console.log('Clic traité');
-  // Supprimer après la première utilisation
-  e.currentTarget.removeEventListener('click', handleClick);
-}
-
-element.addEventListener('click', handleClick);
-```
+<div class="flex justify-center items-center w-full h-full">
+  <div class="text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+    Conway's Game of Life
   </div>
-  
-  <div>
-    <h3 class="text-xl text-yellow-500 mb-2">Options de addEventListener</h3>
+</div>
 
-```js
-// Options de base
-element.addEventListener('click', handler, {
-  once: true,      // Se déclenche une seule fois puis se supprime
-  capture: true,   // Capture pendant la phase descendante
-  passive: true    // Indique que preventDefault() ne sera pas appelé
-});
+---
 
-// Arrêter la propagation
-element.addEventListener('click', function(e) {
-  e.stopPropagation(); // Empêche la remontée aux parents
-});
+# Le Jeu de la Vie de Conway
 
-// Empêcher le comportement par défaut
-form.addEventListener('submit', function(e) {
-  e.preventDefault(); // Empêche l'envoi du formulaire
-  // Validation ou soumission AJAX
-});
-```
-    <div class="mt-2 text-blue-500">ℹ️ L'option 'passive' améliore les performances tactiles</div>
-  </div>
+<div>
+  <h2 class="text-yellow-500 text-xl mb-2">Les Règles</h2>
+  <ul className="space-y-6 text-xl">
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">1.</span>
+      <span>Une cellule vivante avec moins de 2 voisines vivantes meurt (sous-population)</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">2.</span>
+      <span>Une cellule vivante avec 2 ou 3 voisines vivantes survit</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 text-xl mr-3">3.</span>
+      <span>Une cellule vivante avec plus de 3 voisines vivantes meurt (surpopulation)</span>
+    </li>
+    <li className="flex items-start">
+      <span className="text-amber-400 mr-3">4.</span>
+      <span>Une cellule morte avec exactement 3 voisines vivantes devient vivante (reproduction)</span>
+    </li>
+  </ul>
 </div>
