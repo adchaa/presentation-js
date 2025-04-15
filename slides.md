@@ -8,7 +8,6 @@ info: |
 ---
 
 # Événements JavaScript et Manipulation du DOM
-## Construire des applications web interactives
 
 ---
 layout: two-cols
@@ -32,8 +31,8 @@ layout: two-cols
 ::right::
 
 <div class="flex justify-center h-full items-center">
-  <div class="w-40 h-40 bg-yellow-300 rounded-lg shadow-xl flex items-center justify-center transform hover:rotate-45 transition-transform duration-500 cursor-pointer">
-    <span class="text-xl font-bold">Survolez-moi !</span>
+  <div class="w-40 h-40 bg-yellow-500 rounded-lg shadow-xl flex items-center justify-center transform hover:rotate-45 transition-transform duration-500 cursor-pointer">
+    <span class="text-xl font-bold text-white">Survolez-moi !</span>
   </div>
 </div>
 
