@@ -4,3 +4,10 @@
     <br /><SlideCurrentNo />/<SlidesTotal /><br />
   </footer>
 </template>
+
+<style>
+.slidev-layout {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+</style>
