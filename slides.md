@@ -338,30 +338,30 @@ document.write('<p>Nouveau contenu</p>');
   <div>
     <h3 class="text-yellow-500 text-xl mb-2">Événements Souris</h3>
     <ul class="space-y-1 text-sm">
-      <li><code>onclick</code> - Clic sur l'élément</li>
-      <li><code>ondblclick</code> - Double clic</li>
-      <li><code>onmouseover</code> - Souris entre dans l'élément</li>
-      <li><code>onmouseout</code> - Souris quitte l'élément</li>
-      <li><code>onmousedown</code> - Bouton souris enfoncé</li>
-      <li><code>onmouseup</code> - Bouton souris relâché</li>
-      <li><code>onmousemove</code> - Souris déplacée sur élément</li>
-      <li><code>oncontextmenu</code> - Clic droit (menu contextuel)</li>
+      <li><code>click</code> - Clic sur l'élément</li>
+      <li><code>dblclick</code> - Double clic</li>
+      <li><code>mouseover</code> - Souris entre dans l'élément</li>
+      <li><code>mouseout</code> - Souris quitte l'élément</li>
+      <li><code>mousedown</code> - Bouton souris enfoncé</li>
+      <li><code>mouseup</code> - Bouton souris relâché</li>
+      <li><code>mousemove</code> - Souris déplacée sur élément</li>
+      <li><code>contextmenu</code> - Clic droit (menu contextuel)</li>
     </ul>
   </div>
   
   <div>
     <h3 class="text-yellow-500 text-xl mb-2">Formulaires & Clavier</h3>
     <ul class="space-y-1 text-sm">
-      <li><code>onsubmit</code> - Formulaire soumis</li>
-      <li><code>onreset</code> - Formulaire réinitialisé</li>
-      <li><code>onfocus</code> - Élément reçoit le focus</li>
-      <li><code>onblur</code> - Élément perd le focus</li>
-      <li><code>onchange</code> - Valeur du champ changée</li>
-      <li><code>oninput</code> - Saisie dans champ de texte</li>
-      <li><code>onkeydown</code> - Touche enfoncée</li>
-      <li><code>onkeyup</code> - Touche relâchée</li>
-      <li><code>onkeypress</code> - Touche pressée (caractère)</li>
-      <li><code>onselect</code> - Texte sélectionné</li>
+      <li><code>submit</code> - Formulaire soumis</li>
+      <li><code>reset</code> - Formulaire réinitialisé</li>
+      <li><code>focus</code> - Élément reçoit le focus</li>
+      <li><code>blur</code> - Élément perd le focus</li>
+      <li><code>change</code> - Valeur du champ changée</li>
+      <li><code>input</code> - Saisie dans champ de texte</li>
+      <li><code>keydown</code> - Touche enfoncée</li>
+      <li><code>keyup</code> - Touche relâchée</li>
+      <li><code>keypress</code> - Touche pressée (caractère)</li>
+      <li><code>select</code> - Texte sélectionné</li>
     </ul>
   </div>
   
@@ -369,13 +369,13 @@ document.write('<p>Nouveau contenu</p>');
   <div>
     <h3 class="text-yellow-500 text-xl mb-2">Document & Ressources</h3>
     <ul class="space-y-1 text-sm">
-      <li><code>onload</code> - Élément chargé</li>
-      <li><code>onunload</code> - Page déchargée</li>
-      <li><code>onresize</code> - Fenêtre redimensionnée</li>
-      <li><code>onscroll</code> - Défilement de la page</li>
-      <li><code>onerror</code> - Erreur de chargement</li>
-      <li><code>onabort</code> - Chargement interrompu</li>
-      <li><code>onbeforeunload</code> - Avant déchargement</li>
+      <li><code>load</code> - Élément chargé</li>
+      <li><code>unload</code> - Page déchargée</li>
+      <li><code>resize</code> - Fenêtre redimensionnée</li>
+      <li><code>scroll</code> - Défilement de la page</li>
+      <li><code>error</code> - Erreur de chargement</li>
+      <li><code>abort</code> - Chargement interrompu</li>
+      <li><code>beforeunload</code> - Avant déchargement</li>
     </ul>
     
   </div>
@@ -435,45 +435,7 @@ bouton.addEventListener('click', function() {
 
 ---
 
-# Mouse Hover
-
-<div class="grid grid-cols-2 gap-8 h-full">
-  <div class="flex flex-col justify-center pl-20 pt-10">
-    <div id="mouse" class="flex justify-center items-center border-2 border-blue-400 rounded-lg w-52 h-52 text-center bg-gray-800 text-blue-300 font-mono text-xl shadow-lg transition-all duration-300">
-      Déplacez le curseur ici
-    </div>
-  </div>
-  <div class="flex flex-col justify-center pl-4">
-    <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
-    
-  ```js
-  const mouse = document.getElementById("mouse");
-
-  mouse.addEventListener("mousemove", (e) => {
-    // Récupérer les coordonnées de la souris
-    const x = e.clientX;
-    const y = e.clientY;
-    
-    mouse.textContent = `(${x}, ${y})`;
-  });
-  ```
-  </div>
-</div>
-
-<script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const mouse = document.getElementById("mouse")
-  mouse.addEventListener("mousemove",(e)=>{
-    mouse.textContent = `(${e.clientX}, ${e.clientY})`
-  })
-})
-</script>
-
----
-
-# Démo : Écouteurs d'Événements
+# Démo : Click
 
 <div class="flex flex-col gap-9 h-full items-center justify-center mt-20">
   <div class="flex h-full items-center">
@@ -513,6 +475,44 @@ onMounted(() => {
 
 ---
 
+# Démo : Survol de la Souris
+
+<div class="grid grid-cols-2 gap-8 h-full">
+  <div class="flex flex-col justify-center pl-4">
+    <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
+    
+  ```js
+  const mouse = document.getElementById("mouse");
+
+  mouse.addEventListener("mousemove", (e) => {
+    // Récupérer les coordonnées de la souris
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    mouse.textContent = `(${x}, ${y})`;
+  });
+  ```
+  </div>
+  <div class="flex flex-col justify-center pl-24 pt-10">
+    <div id="mouse" class="flex justify-center items-center border-2 border-blue-400 rounded-lg w-52 h-52 text-center bg-gray-800 text-blue-300 font-mono text-xl shadow-lg transition-all duration-300">
+      Déplacez le curseur ici
+    </div>
+  </div>
+</div>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const mouse = document.getElementById("mouse")
+  mouse.addEventListener("mousemove",(e)=>{
+    mouse.textContent = `(${e.clientX}, ${e.clientY})`
+  })
+})
+</script>
+
+---
+
 # Démo : Événements Clavier
 
 <div class="grid grid-cols-2 gap-8 h-full">
@@ -529,15 +529,13 @@ onMounted(() => {
 const input = document.getElementById("keyboard-input")
 const display = document.getElementById("key-display")
 
-if (input && display) {
-  input.addEventListener("keydown", (e) => {
-    display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
-    
-    if (e.key === "h") {
-      display.textContent = "special"
-    }
-  })
-}
+input.addEventListener("keydown", (e) => {
+  display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
+  
+  if (e.key === "h") {
+    display.textContent = "special"
+  }
+})
 ```
   </div>
 </div>
@@ -549,18 +547,18 @@ onMounted(() => {
   const input = document.getElementById("keyboard-input")
   const display = document.getElementById("key-display")
   
-  if (input && display) {
-    input.addEventListener("keydown", (e) => {
-      display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
-      
-      if (e.key === "h") {
-        display.textContent = "special"
-      }
-    })
-  }
+  input.addEventListener("keydown", (e) => {
+    display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
+    
+    if (e.key === "h") {
+      display.textContent = "special"
+    }
+  })
 })
 </script>
 
+---
+layout: two-cols
 ---
 
 # Propagation des Événements
@@ -704,8 +702,6 @@ form.addEventListener('submit', function(e) {
   <div>
     <h3 class="text-yellow-500 text-xl mb-2">Performance</h3>
     <ul>
-      <li>Utilisez la délégation d'événements pour plusieurs éléments</li>
-      <li>Évitez les manipulations DOM excessives</li>
       <li>Regroupez les mises à jour DOM quand c'est possible</li>
       <li>Envisagez d'utiliser `requestAnimationFrame` pour les animations</li>
       <li>Évitez le "layout thrashing" (alternance de lectures et écritures)</li>
