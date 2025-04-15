@@ -189,12 +189,14 @@ element.textContent = 'Texte simple';
 
 // Modifier des attributs (méthode 1)
 element.setAttribute('class', 'active');
-element.setAttribute('data-id', '123');
+element.setAttribute('href', 'https://exemple.com');
 
 // Modifier des attributs (méthode 2)
-element.id = 'nouveauId';
-element.className = 'nouvelle-classe';
+element.className = 'active';
 element.href = 'https://exemple.com';
+```
+```html
+<a class="active" href="https://exemple.com"></a>
 ```
   </div>
   
@@ -472,6 +474,56 @@ onMounted(() => {
   bouton.addEventListener('click', function() {
     bouton.style.backgroundColor = getRandomColor()
   });
+})
+</script>
+
+---
+
+# Démo : Événements Clavier
+
+<div class="grid grid-cols-2 gap-8 h-full">
+  <div class="flex flex-col justify-center items-center mt-9">
+    <input id="keyboard-input" class="w-64 p-3 bg-gray-900 border-2 border-blue-400 rounded-lg text-center text-blue-300 font-mono text-xl focus:outline-none focus:border-yellow-400" type="text" placeholder="Cliquez ici d'abord">
+    <div id="key-display" class="mt-6 p-4 w-64 h-24 bg-gray-900 border-2 border-green-400 rounded-lg flex items-center justify-center text-green-300 font-mono text-xl">
+      Appuyez sur une touche
+    </div>
+  </div>
+  <div class="flex flex-col justify-center pl-4">
+    <h3 class="text-yellow-500 text-xl mb-4">Code</h3>
+    
+```js
+const input = document.getElementById("keyboard-input")
+const display = document.getElementById("key-display")
+
+if (input && display) {
+  input.addEventListener("keydown", (e) => {
+    display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
+    
+    if (e.key === "h") {
+      display.textContent = "special"
+    }
+  })
+}
+```
+  </div>
+</div>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const input = document.getElementById("keyboard-input")
+  const display = document.getElementById("key-display")
+  
+  if (input && display) {
+    input.addEventListener("keydown", (e) => {
+      display.textContent = `Touche: ${e.key}\nCode: ${e.code}`
+      
+      if (e.key === "h") {
+        display.textContent = "special"
+      }
+    })
+  }
 })
 </script>
 
