@@ -1,6 +1,7 @@
 ---
 theme: geist
 class: text-center
+colorSchema: dark
 highlighter: shiki
 mdc: true
 info: |
