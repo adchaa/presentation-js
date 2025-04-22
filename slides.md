@@ -870,24 +870,6 @@ layout: full
 ---
 
 <div class="flex flex-col items-center justify-center h-full">
-  <div class="text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
-    Merci
-  </div>
-  <div class="text-2xl text-gray-400 mt-4">
-    Des questions ?
-  </div>
-  <div class="mt-12 flex gap-8">
-    <div class="animate-bounce text-4xl">👨‍💻</div>
-    <div class="animate-pulse text-4xl">🚀</div>
-    <div class="animate-bounce text-4xl">🎮</div>
-  </div>
-</div>
-
----
-layout: full
----
-
-<div class="flex flex-col items-center justify-center h-full">
   <div class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
     Résumé
   </div>
@@ -913,5 +895,23 @@ layout: full
         <span>Game of Life - Source code</span>
       </a>
     </div>
+  </div>
+</div>
+
+---
+layout: full
+---
+
+<div class="flex flex-col items-center justify-center h-full">
+  <div class="text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text mb-6">
+    Merci
+  </div>
+  <div class="text-2xl text-gray-400 mt-4">
+    Des questions ?
+  </div>
+  <div class="mt-12 flex gap-8">
+    <div class="animate-bounce text-4xl">👨‍💻</div>
+    <div class="animate-pulse text-4xl">🚀</div>
+    <div class="animate-bounce text-4xl">🎮</div>
   </div>
 </div>
